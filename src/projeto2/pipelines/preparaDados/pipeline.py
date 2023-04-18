@@ -5,7 +5,7 @@ generated using Kedro 0.18.7
 
 from kedro.pipeline import Pipeline, node, pipeline
 from .nodes import comform_data,x_y,short_type2pt,short_type3pt
-from .nodes import y_test, svc,metrics,filter_short_type3pt,cof_data
+from .nodes import y_test, svc,metrics,filter_short_type3pt,cof_data,logist_regre
 from .nodes import pycaret_mlsflow,pycaret_classificador, dim_data,filter_short_type
 
 def create_pipeline(**kwargs) -> Pipeline:
@@ -92,6 +92,12 @@ def create_pipeline(**kwargs) -> Pipeline:
                 outputs='dados_limpos',
                 name='comforme_data',
             ),
+               node(
+            func=logist_regre,
+            name= 'regressao_logist',
+            inputs='Xtrain',
+            outputs='regre_logist',
+         ),
 ])
  
 

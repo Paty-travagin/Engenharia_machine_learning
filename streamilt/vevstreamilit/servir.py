@@ -8,10 +8,10 @@ import joblib
 #st.title('Minha primeira aplicação :sunglasses:')
 
 model=pickle.load(open('/infnet-machine/model (1).pkl','rb'))
-'''
+
 app= Flask(__name__ )
 
-'''
+
 @app.route( '/predict', methods=['GET'])
 
 def texto():
@@ -24,6 +24,15 @@ def predict():
     mail = request.form.get('email')
 
     return 'funcionou'
+
+
+
+if __name__== '__main__':
+    app.run(debug=True, port= 5006)
+
+
+
+
 '''
 
 @app.route( '/predict', methods=['POST'])
@@ -51,18 +60,18 @@ if __name__== '__main__':
 
 if __name__== '__main__':
     app.run(debug=True, port= 5002)
-
 '''
 
 
 
 
 
-from flask import Flask, jsonify, request
 
 
+
+    '''
 app = Flask(__name__)
-model = joblib.load('/infnet-machine/model lr.pkl')
+model = joblib.load('/infnet-machine/model dtc.pkl')
 
 
 @app.route('/prever', methods=['POST'])
@@ -77,4 +86,4 @@ def prever():
     #return jsonify(dados)
 
 if __name__ == '__main__':
-    app.run(debug=True, port= 5002)
+    app.run(debug=True, port= 5002)'''

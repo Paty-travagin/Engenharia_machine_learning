@@ -27,6 +27,8 @@ from sklearn.ensemble import RandomForestRegressor
 from pycaret.classification import ClassificationExperiment 
 from pycaret.classification import *
 from pycaret.regression import *
+from sklearn.metrics import log_loss
+
 
 mlflow.start_run()
 ##teste
@@ -99,7 +101,7 @@ def svc(X,y):
     scaler = StandardScaler()
     scaler.fit(X)
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
-    return X_train, y_test
+    return X_train, X_test
 
     ### tamanho das metricas
 def metrics(y_test,X_train):
@@ -121,6 +123,8 @@ def pycaret_mlsflow(conformed):
     exp= ClassificationExperiment()
     exp.setup(conformed, target ='shot_made_flag',
     session_id =123, n_jobs=-2, log_experiment='mlflow', experiment_name='classificador_nbakobe')
+    exp.add_metric('logloss', 'Log Loss', log_loss, greater_is_better=False) 
+
     exp.compare_models()
     
     return exp
@@ -134,8 +138,22 @@ def pycaret_classificador(conformed):
     exp= RegressionExperiment()
     exp.setup(conformed, target ='shot_made_flag',
     session_id =123, n_jobs=-2, log_experiment='mlflow', experiment_name='regressor_nbakobe')
+    exp.add_metric('logloss', 'Log Loss', log_loss, greater_is_better=False) 
     exp.compare_models()
-    
     return exp
+'''
+def logist_regre(conformed):
+    exp= RegressionExperiment()
+    exp.setup(conformed, target ='shot_made_flag',session_id =456, n_jobs=-2, log_experiment='mlflow', experiment_name='logist_regressor')
+    exp.add_metric('logloss', 'Log Loss', log_loss, greater_is_better=False) 
+    model_lr = exp.create_model('lr')
 
+    return model_lr'''
+    
+def logist_regre(X_train):
+    exp= RegressionExperiment()
+    exp.setup(X_train,session_id =456, n_jobs=-2, log_experiment='mlflow', experiment_name='logist_regressor')
+    exp.add_metric('logloss', 'Log Loss', log_loss, greater_is_better=False) 
+    model_lr = exp.create_model('lr')
 
+    return model_lr

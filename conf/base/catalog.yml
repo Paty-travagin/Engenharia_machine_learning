@@ -80,3 +80,11 @@ shot_type2ptt:
 dados_limpos:
   type: pandas.ParquetDataSet
   filepath: data/02_intermidiate/dados_limpos.csv
+
+
+regre_logist:
+    type: kedro_mlflow.io.artifacts.MlflowArtifactDataSet
+    data_set:
+        type: kedro_mlflow.io.models.MlflowModelSaverDataSet
+        flavor: mlflow.sklearn
+        filepath: data/02_intermidiate/regre_logist
